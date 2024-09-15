@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Character</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bali&display=swap');
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff0000 0%, #ffffff 100%);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+            text-align: center;
+        }
+        h1 {
+            font-size: 3em;
+            background: linear-gradient(to right, #ff0000, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+            display: inline-block;
+        }
+        p {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            margin-bottom: 40px;
+            max-width: 600px;
+            text-align: center;
+            font-family: 'Noto Sans Bali', sans-serif;
+            animation: rainbow 3s infinite;
+        }
+        @keyframes rainbow {
+            0% { color: #ff0000; }
+            14% { color: #ff7f00; }
+            28% { color: #ffff00; }
+            42% { color: #00ff00; }
+            57% { color: #00ffff; }
+            71% { color: #0000ff; }
+            85% { color: #7f00ff; }
+            100% { color: #ff0000; }
+        }
+        button {
+            font-size: 1.2em;
+            background-color: #007bff;
+            color: #fff;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            text-transform: uppercase;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+        #overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>YouTube</h1>
+    <p id="description">Subscribe to our YouTube channel first to continue uploading your character</p>
+    <button id="joinButton" onclick="handleButtonClick()">Subscribe</button>
+
+    <div id="overlay">
+        <div>Please wait <span id="countdown">5</span> seconds</div>
+    </div>
+
+    <script>
+        function handleButtonClick() {
+            alert('Subscribe To Unclock Link.');
+
+            // Show the overlay countdown
+            let overlay = document.getElementById('overlay');
+            overlay.style.display = 'flex';
+            
+            let countdownElement = document.getElementById('countdown');
+            let countdown = 5;
+
+            let countdownInterval = setInterval(() => {
+                countdownElement.innerText = countdown;
+                countdown--;
+
+                if (countdown < 0) {
+                    clearInterval(countdownInterval);
+                    localStorage.setItem('isSubscribed', true);
+                    window.location.href = 'https://youtube.com/@fixtecno?si=9KnXqkZhlksxDjvN'; // Replace with your YouTube channel link
+                }
+            }, 1000);
+        }
+
+        window.onload = function() {
+            if (localStorage.getItem('isSubscribed')) {
+                // Change button to "Continue to Link" if already subscribed
+                document.getElementById('joinButton').innerText = 'Continue to Link';
+                document.getElementById('description').innerText = "Thank you for subscribing ";
+                
+                // Set up the continue link action
+                document.getElementById('joinButton').onclick = function() {
+                    // Save the status and redirect to the upload link
+                    localStorage.setItem('hasNavigated', true);
+                    window.location.href = 'https://sfl.gl/nCB0A'; // Replace with your upload link
+                };
+            }
+            
+            // Automatically redirect if navigated before
+            if (localStorage.getItem('hasNavigated')) {
+                window.location.href = 'https://sfl.gl/nCB0A'; // Replace with your upload link
+            }
+        }
+    </script>
+
+</body>
+</html>
